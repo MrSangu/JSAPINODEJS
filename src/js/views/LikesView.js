@@ -1,0 +1,32 @@
+import {DOME} from './base';
+import {titleSort} from './SearchView';
+export const toggleLike= isLiked=>{
+  const iconString= isLiked? 'icon-heart' : 'icon-heart-outlined';
+  document.querySelector('.recipe__love use').setAttribute('href',`img/icons.svg#${iconString}`)
+}
+
+export const toggleLikeIcon=(numLikes)=>{
+  DOME.likesMenu.style.visibility= numLikes>0 ? 'visible': 'hidden';
+}
+
+export const renderLikesList=(like)=>{
+  const markup=`
+  <li>
+      <a class="likes__link" href="#${like.id}">
+          <figure class="likes__fig">
+              <img src="${like.img}" alt="${like.title}">
+          </figure>
+          <div class="likes__data">
+              <h4 class="likes__name">${titleSort(like.title)}</h4>
+              <p class="likes__author">${like.author}</p>
+          </div>
+      </a>
+  </li>`;
+
+  DOME.likesList.insertAdjacentHTML('beforeend',markup);
+}
+
+export const deleteLikesItem=id=>{
+  const x=document.querySelector(`.likes__link [href="${id}"]`);
+if(x) x.parentElement.removeChild(x);
+}
